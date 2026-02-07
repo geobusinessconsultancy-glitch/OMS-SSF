@@ -1,0 +1,29 @@
+{
+  "name": "sri-senthur-furniture-oms",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Order Management System for Sri Senthur Furniture",
+  "author": "Your Company",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview",
+    "preview:prod": "npm run build:prod && vite preview"
+  },
+  "dependencies": {
+    "lucide-react": "0.460.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "recharts": "2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "terser": "^5.46.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

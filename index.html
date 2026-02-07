@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRI SENTHUR FURNITURE - OMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-print-color-adjust: exact; 
+            print-color-adjust: exact;
+            margin: 0;
+            padding: 0;
+        }
+        
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            
+            @page { 
+                size: A4; 
+                margin: 0 !important; /* Removes browser-added URLs, dates, and titles */
+            }
+
+            html, body { 
+                background: white !important; 
+                margin: 0 !important; 
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                height: 297mm !important;
+                width: 210mm !important;
+            }
+
+            .a4-page {
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                page-break-after: always;
+                height: 297mm !important;
+                width: 210mm !important;
+                overflow: hidden !important;
+                display: block !important;
+                box-sizing: border-box !important;
+                position: relative !important;
+                background: white !important;
+            }
+            .a4-page:last-child {
+                page-break-after: auto !important;
+            }
+        }
+
+        .print-only { display: none; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Smooth Transitions */
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Seal Grainy Texture */
+        .seal-texture {
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+    </style>
+    <style>
+  /* Base styles */
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* DEFAULT SCREEN VIEW: Hide the print template, show the app */
+  .print-only {
+    display: none !important;
+  }
+
+  /* PRINT VIEW: Hide the app, show the print template */
+  @media print {
+    /* Hide all standard UI elements (navbar, buttons, dashboard) */
+    .no-print, .no-print * {
+      display: none !important;
+    }
+
+    /* Reveal the bill */
+    .print-only {
+      display: block !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    /* Force A4 size and remove browser headers/footers */
+    @page {
+      size: A4;
+      margin: 0 !important;
+    }
+
+    /* Ensure background colors (like the table header gray) print correctly */
+    html, body {
+      background: white !important;
+      height: 100%;
+      overflow: visible !important;
+    }
+  }
+</style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+    "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
