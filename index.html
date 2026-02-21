@@ -16,7 +16,7 @@
         }
         
         @media print {
-            .no-print { display: none !important; }
+            /* .no-print { display: none !important; } */
             .print-only { display: block !important; }
             
             @page { 
@@ -53,7 +53,7 @@
             }
         }
 
-        .print-only { display: none; }
+        /* .print-only { display: none; } */
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
@@ -86,14 +86,14 @@
 
   /* DEFAULT SCREEN VIEW: Hide the print template, show the app */
   .print-only {
-    display: none !important;
+    /* display: none !important; */
   }
 
   /* PRINT VIEW: Hide the app, show the print template */
   @media print {
     /* Hide all standard UI elements (navbar, buttons, dashboard) */
     .no-print, .no-print * {
-      display: none !important;
+      /* display: none !important; */
     }
 
     /* Reveal the bill */
