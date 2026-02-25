@@ -1,205 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SRI SENTHUR FURNITURE - OMS</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BASE (SCREEN) ================= */
+/* ================= BASE ================= */
 body {
   font-family: 'Inter', sans-serif;
-  margin: 0;
-  background: #f8fafc;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  margin: 0;
+  padding: 0;
 }
-
-.print-only { display: none; }
 
 /* ================= PRINT ================= */
 @media print {
 
-  .no-print { display: none !important; }
-
+  /* SHOW print layout */
   .print-only {
     display: block !important;
+    position: static !important; /* FIX 1 */
   }
 
+  /* PAGE */
   @page {
     size: A4;
-    margin: 12mm;
+    margin: 0 !important;
   }
 
+  /* DO NOT FIX HEIGHT */
   html, body {
-    background: #fff !important;
-    height: auto !important;
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;     /* FIX 2 */
+    width: auto !important;
     overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  .invoice {
-    position: relative;
+  /* A4 CONTAINER */
+  .a4-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
     page-break-after: always;
+    height: auto !important;      /* FIX 3 */
+    width: 210mm !important;
+    overflow: visible !important; /* FIX 4 (CRITICAL) */
+    display: block !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    background: white !important;
   }
 
-  /* WATERMARK */
-  .watermark {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.12;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .a4-page:last-child {
+    page-break-after: auto !important;
   }
 
-  /* CONTENT ABOVE WATERMARK */
-  .content {
-    position: relative;
-    z-index: 10;
-  }
-
-  /* SAFE FLEX (only where allowed) */
-  .print-flex {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-  }
-
-  .col-60 { width: 60% !important; }
-  .col-40 { width: 40% !important; }
-  .col-50 { width: 50% !important; }
-
-  /* ITEMS MUST BE TABLE */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    page-break-inside: auto;
-  }
-
-  thead { display: table-header-group; }
-  tfoot { display: table-footer-group; }
-
-  tr { page-break-inside: avoid; }
-
-  th, td {
-    padding: 6px;
-    font-size: 12px;
-    vertical-align: top;
+  /* ENSURE DESCRIPTION + SEAL ALWAYS VISIBLE */
+  .description,
+  .description *,
+  .seal,
+  .seal * {
+    visibility: visible !important;
+    display: block !important;
+    position: static !important;
     color: #000 !important;
+    z-index: 2 !important;
+  }
+
+  /* WATERMARK SAFE LAYER */
+  .watermark {
+    position: absolute !important;
+    inset: 0;
+    z-index: 0 !important;
+    pointer-events: none;
   }
 }
+
+/* Scrollbar (screen only) */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Animations (screen only) */
+.fade-in { animation: fadeIn 0.5s ease-out; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Seal texture untouched */
+.seal-texture {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 </style>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+    "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
+  }
+}
+</script>
+
+<link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
-
-<!-- ================= PRINT TEMPLATE ================= -->
-<div class="print-only invoice border border-slate-400 p-4">
-
-  <!-- WATERMARK -->
-  <div class="watermark">
-    <div class="text-5xl font-bold text-red-300">
-      SRI SENTHUR FURNITURE
-    </div>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- HEADER -->
-    <div class="text-center border-b pb-2 mb-3">
-      <h1 class="text-xl font-bold text-red-600">ஸ்ரீ செந்தூர் பர்னிச்சர்ஸ்</h1>
-      <p class="text-xs">
-        51/1, Muthal Thottam, Uzhavar Sandhai Road, Coimbatore – 638004<br>
-        Ph: 7448812333 | 7448912333
-      </p>
-    </div>
-
-    <!-- CUSTOMER + ORDER INFO -->
-    <div class="print-flex mb-3">
-      <div class="col-60 text-sm">
-        <strong>Customer:</strong> TEST<br>
-        <strong>Mobile:</strong> 67676789<br>
-        <strong>Address:</strong> HSHDHD<br>
-        <strong>PIN:</strong> 74839
-      </div>
-      <div class="col-40 text-sm text-right">
-        <strong>Order Date:</strong> 25-02-2026<br>
-        <strong>Sales Person:</strong> GSHD<br>
-        <strong>Delivery:</strong> 25-02-2026
-      </div>
-    </div>
-
-    <!-- ITEMS / DESCRIPTION -->
-    <table border="1" class="mb-3">
-      <thead>
-        <tr class="bg-slate-100">
-          <th width="50%">Description</th>
-          <th width="10%">Qty</th>
-          <th width="20%">Rate</th>
-          <th width="20%">Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            Teak Wood Sofa Set – Premium Finish<br>
-            5-Seater, Custom Cushion, Walnut Polish
-          </td>
-          <td align="center">1</td>
-          <td align="right">₹3,900</td>
-          <td align="right">₹3,900</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- NOTES + TOTALS -->
-    <div class="print-flex mt-3">
-      <div class="col-60 text-xs">
-        <strong>Manufacturing Notes:</strong><br>
-        உற்பத்தி காலம் 20–25 நாட்கள் ஆகும்.<br><br>
-
-        <strong>General Terms:</strong><br>
-        • Advance is non-refundable<br>
-        • Full payment before delivery
-      </div>
-
-      <div class="col-40">
-        <table border="1">
-          <tr>
-            <td>Bill Total</td>
-            <td align="right">₹3,900</td>
-          </tr>
-          <tr>
-            <td>Advance Paid</td>
-            <td align="right">₹500</td>
-          </tr>
-          <tr>
-            <td><strong>Balance Due</strong></td>
-            <td align="right"><strong>₹3,400</strong></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <!-- SIGNATURE + SEAL -->
-    <div class="print-flex mt-6">
-      <div class="col-50 text-sm">
-        Customer Signature
-      </div>
-      <div class="col-50 text-right text-sm">
-        <strong>For Sri Senthur Furniture</strong><br><br>
-        Authorized Signatory
-      </div>
-    </div>
-
-  </div>
-</div>
-
+<body class="bg-slate-50 text-slate-900">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
