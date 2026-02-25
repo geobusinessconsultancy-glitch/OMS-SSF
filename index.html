@@ -1,139 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SRI SENTHUR FURNITURE - OMS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SRI SENTHUR FURNITURE - OMS</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ================= BASE (SCREEN) ================= */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: #f8fafc;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 
-  <style>
-    /* ================= BASE (SCREEN) ================= */
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8fafc;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
+.print-only { display: none; }
 
-    /* Hide invoice on screen */
-    .print-only {
-      display: none;
-    }
+/* ================= PRINT ================= */
+@media print {
 
-    /* ================= PRINT ================= */
-    @media print {
+  .no-print { display: none !important; }
 
-      /* Hide app UI */
-      .no-print {
-        display: none !important;
-      }
-
-      /* Show invoice */
-      .print-only {
-        display: block !important;
-        position: static !important; /* ABSOLUTELY REQUIRED */
-      }
-
-      @page {
-        size: A4;
-        margin: 12mm;
-      }
-
-      html, body {
-        background: #fff !important;
-        height: auto !important;
-        width: auto !important;
-        overflow: visible !important;
-      }
-
-      /* Invoice container */
-      .a4-page {
-        position: relative !important;
-        width: 100%;
-        min-height: auto !important;
-        overflow: visible !important;
-        page-break-after: always;
-      }
-
-      .a4-page:last-child {
-        page-break-after: auto;
-      }
-
-      /* Watermark must stay behind */
-      .watermark {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        opacity: 0.12;
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      /* Content above watermark */
-      .content {
-        position: relative;
-        z-index: 10;
-      }
-
-      /* TABLE = ONLY SAFE LAYOUT FOR PRINT */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        page-break-inside: auto;
-      }
-
-      thead {
-        display: table-header-group;
-      }
-
-      tfoot {
-        display: table-footer-group;
-      }
-
-      tr {
-        page-break-inside: avoid;
-      }
-
-      th, td {
-        padding: 6px;
-        vertical-align: top;
-        color: #000 !important;
-      }
-
-      /* Disable flex for print safety */
-      .flex {
-        display: block !important;
-      }
-    }
-  </style>
-
-  <!-- Import map -->
-  <script type="importmap">
-  {
-    "imports": {
-      "react": "https://esm.sh/react@19.0.0",
-      "react-dom": "https://esm.sh/react-dom@19.0.0",
-      "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-      "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
-      "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
-    }
+  .print-only {
+    display: block !important;
   }
-  </script>
 
-  <link rel="stylesheet" href="/index.css">
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  html, body {
+    background: #fff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .invoice {
+    position: relative;
+    page-break-after: always;
+  }
+
+  /* WATERMARK */
+  .watermark {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CONTENT ABOVE WATERMARK */
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* SAFE FLEX (only where allowed) */
+  .print-flex {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+  }
+
+  .col-60 { width: 60% !important; }
+  .col-40 { width: 40% !important; }
+  .col-50 { width: 50% !important; }
+
+  /* ITEMS MUST BE TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto;
+  }
+
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+
+  tr { page-break-inside: avoid; }
+
+  th, td {
+    padding: 6px;
+    font-size: 12px;
+    vertical-align: top;
+    color: #000 !important;
+  }
+}
+</style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
-  <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+<body>
+
+<!-- ================= PRINT TEMPLATE ================= -->
+<div class="print-only invoice border border-slate-400 p-4">
+
+  <!-- WATERMARK -->
+  <div class="watermark">
+    <div class="text-5xl font-bold text-red-300">
+      SRI SENTHUR FURNITURE
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="text-center border-b pb-2 mb-3">
+      <h1 class="text-xl font-bold text-red-600">ஸ்ரீ செந்தூர் பர்னிச்சர்ஸ்</h1>
+      <p class="text-xs">
+        51/1, Muthal Thottam, Uzhavar Sandhai Road, Coimbatore – 638004<br>
+        Ph: 7448812333 | 7448912333
+      </p>
+    </div>
+
+    <!-- CUSTOMER + ORDER INFO -->
+    <div class="print-flex mb-3">
+      <div class="col-60 text-sm">
+        <strong>Customer:</strong> TEST<br>
+        <strong>Mobile:</strong> 67676789<br>
+        <strong>Address:</strong> HSHDHD<br>
+        <strong>PIN:</strong> 74839
+      </div>
+      <div class="col-40 text-sm text-right">
+        <strong>Order Date:</strong> 25-02-2026<br>
+        <strong>Sales Person:</strong> GSHD<br>
+        <strong>Delivery:</strong> 25-02-2026
+      </div>
+    </div>
+
+    <!-- ITEMS / DESCRIPTION -->
+    <table border="1" class="mb-3">
+      <thead>
+        <tr class="bg-slate-100">
+          <th width="50%">Description</th>
+          <th width="10%">Qty</th>
+          <th width="20%">Rate</th>
+          <th width="20%">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Teak Wood Sofa Set – Premium Finish<br>
+            5-Seater, Custom Cushion, Walnut Polish
+          </td>
+          <td align="center">1</td>
+          <td align="right">₹3,900</td>
+          <td align="right">₹3,900</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- NOTES + TOTALS -->
+    <div class="print-flex mt-3">
+      <div class="col-60 text-xs">
+        <strong>Manufacturing Notes:</strong><br>
+        உற்பத்தி காலம் 20–25 நாட்கள் ஆகும்.<br><br>
+
+        <strong>General Terms:</strong><br>
+        • Advance is non-refundable<br>
+        • Full payment before delivery
+      </div>
+
+      <div class="col-40">
+        <table border="1">
+          <tr>
+            <td>Bill Total</td>
+            <td align="right">₹3,900</td>
+          </tr>
+          <tr>
+            <td>Advance Paid</td>
+            <td align="right">₹500</td>
+          </tr>
+          <tr>
+            <td><strong>Balance Due</strong></td>
+            <td align="right"><strong>₹3,400</strong></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- SIGNATURE + SEAL -->
+    <div class="print-flex mt-6">
+      <div class="col-50 text-sm">
+        Customer Signature
+      </div>
+      <div class="col-50 text-right text-sm">
+        <strong>For Sri Senthur Furniture</strong><br><br>
+        Authorized Signatory
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>
