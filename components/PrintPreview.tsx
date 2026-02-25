@@ -1,20 +1,3 @@
-The build errors you're encountering indicate that your PrintPreview.tsx file is corrupted with duplicate code and a truncated ending.
-
-Why the Build Failed:
-Duplicate Declaration (TEMPLATE_BASE64): The error ERROR: The symbol "TEMPLATE_BASE64" has already been declared confirms that you have the same variable name defined twice in the file. This usually happens if you pasted a new version of the code over an old one but didn't delete the original first.
-
-Truncated File (Unexpected end of file): The second error indicates the file ends abruptly before the final span and div tags are closed. This is common when pasting extremely large Base64 strings, as many editors or clipboards hit a character limit and cut off the bottom of the file.
-
-The Fix:
-You need to clean the file entirely and paste a version that is correctly closed and lacks duplicates.
-
-1. Clear the File
-Open components/PrintPreview.tsx, delete everything inside it, and save the empty file.
-
-2. Paste the Corrected Structure
-Copy the code below. I have removed the duplicate declaration and ensured all tags are closed correctly. I have left the image string empty ("") so you can verify the build passes first.
-
-TypeScript
 import React from 'react';
 import { Order, OrderStatus, OrderItem } from '../types';
 import { Printer } from 'lucide-react';
