@@ -1,104 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SRI SENTHUR FURNITURE - OMS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SRI SENTHUR FURNITURE - OMS</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-/* ================= BASE ================= */
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  background: #f8fafc;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-.print-only { display: none; }
+  <style>
+    /* ================= BASE (SCREEN) ================= */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8fafc;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
 
-/* ================= PRINT ================= */
-@media print {
+    /* Hide invoice on screen */
+    .print-only {
+      display: none;
+    }
 
-  .no-print { display: none !important; }
+    /* ================= PRINT ================= */
+    @media print {
 
-  .print-only {
-    display: block !important;
-    position: static !important;
+      /* Hide app UI */
+      .no-print {
+        display: none !important;
+      }
+
+      /* Show invoice */
+      .print-only {
+        display: block !important;
+        position: static !important; /* ABSOLUTELY REQUIRED */
+      }
+
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      html, body {
+        background: #fff !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+      }
+
+      /* Invoice container */
+      .a4-page {
+        position: relative !important;
+        width: 100%;
+        min-height: auto !important;
+        overflow: visible !important;
+        page-break-after: always;
+      }
+
+      .a4-page:last-child {
+        page-break-after: auto;
+      }
+
+      /* Watermark must stay behind */
+      .watermark {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        opacity: 0.12;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Content above watermark */
+      .content {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* TABLE = ONLY SAFE LAYOUT FOR PRINT */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: auto;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+
+      tfoot {
+        display: table-footer-group;
+      }
+
+      tr {
+        page-break-inside: avoid;
+      }
+
+      th, td {
+        padding: 6px;
+        vertical-align: top;
+        color: #000 !important;
+      }
+
+      /* Disable flex for print safety */
+      .flex {
+        display: block !important;
+      }
+    }
+  </style>
+
+  <!-- Import map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19.0.0",
+      "react-dom": "https://esm.sh/react-dom@19.0.0",
+      "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+      "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+      "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
+    }
   }
+  </script>
 
-  @page {
-    size: A4;
-    margin: 12mm;
-  }
-
-  html, body {
-    background: #fff !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  .a4-page {
-    position: relative;
-    overflow: visible !important;
-    page-break-after: always;
-  }
-
-  /* WATERMARK — MUST STAY BEHIND */
-  .watermark {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.12;
-    pointer-events: none;
-  }
-
-  /* CONTENT — MUST STAY ABOVE */
-  .content {
-    position: relative;
-    z-index: 10;
-  }
-
-  /* DESCRIPTION / ITEMS — FORCE VISIBILITY */
-  .items-table,
-  .items-table * {
-    display: table !important;
-    visibility: visible !important;
-    color: #000 !important;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    page-break-inside: auto;
-  }
-
-  thead { display: table-header-group; }
-  tfoot { display: table-footer-group; }
-
-  tr {
-    page-break-inside: avoid;
-    page-break-after: auto;
-  }
-
-  td, th {
-    padding: 6px;
-    vertical-align: top;
-  }
-
-  /* FLEX IS NOT TRUSTED IN PRINT */
-  .flex { display: block !important; }
-}
-</style>
+  <link rel="stylesheet" href="/index.css">
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-900">
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
