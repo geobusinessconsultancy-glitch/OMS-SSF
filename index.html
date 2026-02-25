@@ -6,116 +6,100 @@
 <title>SRI SENTHUR FURNITURE - OMS</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* ===============================
-   BASE STYLES
-================================ */
+/* ================= BASE ================= */
 body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f8fafc;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: #f8fafc;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-/* Hide bill during normal app usage */
-.print-only {
-    display: none;
-}
+.print-only { display: none; }
 
-/* ===============================
-   PRINT STYLES (CRITICAL)
-================================ */
+/* ================= PRINT ================= */
 @media print {
 
-    /* Hide dashboard / UI */
-    .no-print,
-    .no-print * {
-        display: none !important;
-    }
+  .no-print { display: none !important; }
 
-    /* Show invoice */
-    .print-only {
-        display: block !important;
-        position: static !important; /* IMPORTANT */
-    }
-
-    /* Page setup */
-    @page {
-        size: A4;
-        margin: 12mm;
-    }
-
-    html, body {
-        background: #fff !important;
-        width: 100%;
-        height: auto;
-        overflow: visible !important;
-    }
-
-    /* Invoice container */
-    .a4-page {
-        width: 100%;
-        min-height: auto;            /* NOT fixed */
-        overflow: visible !important;
-        page-break-after: always;
-        page-break-inside: avoid;
-    }
-
-    /* Tables must not break randomly */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        page-break-inside: auto;
-    }
-
-    thead {
-        display: table-header-group;
-    }
-
-    tfoot {
-        display: table-footer-group;
-    }
-
-    tr {
-        page-break-inside: avoid;
-        page-break-after: auto;
-    }
-
-    /* Seal / signature / footer */
-    .seal,
-    .signature {
-        position: static !important;
-        margin-top: 30px;
-        page-break-inside: avoid;
-    }
-}
-
-/* Scrollbars (screen only) */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-</style>
-
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
-    "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
+  .print-only {
+    display: block !important;
+    position: static !important;
   }
+
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  html, body {
+    background: #fff !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .a4-page {
+    position: relative;
+    overflow: visible !important;
+    page-break-after: always;
+  }
+
+  /* WATERMARK — MUST STAY BEHIND */
+  .watermark {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* CONTENT — MUST STAY ABOVE */
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* DESCRIPTION / ITEMS — FORCE VISIBILITY */
+  .items-table,
+  .items-table * {
+    display: table !important;
+    visibility: visible !important;
+    color: #000 !important;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: auto;
+  }
+
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  td, th {
+    padding: 6px;
+    vertical-align: top;
+  }
+
+  /* FLEX IS NOT TRUSTED IN PRINT */
+  .flex { display: block !important; }
 }
-</script>
+</style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
