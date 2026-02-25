@@ -12,14 +12,25 @@
 /* ================= BASE ================= */
 body {
   font-family: 'Inter', sans-serif;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
   margin: 0;
   padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 /* ================= PRINT ================= */
 @media print {
+
+  /* FORCE EVERYTHING TO BE VISIBLE */
+  * {
+    visibility: visible !important;
+  }
+
+  /* OVERRIDE TAILWIND PRINT HIDES */
+  .hidden,
+  .print\:hidden {
+    display: block !important;
+  }
 
   .print-only {
     display: block !important;
@@ -32,20 +43,18 @@ body {
   }
 
   html, body {
-    background: white !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    background: #fff !important;
     height: auto !important;
     width: auto !important;
     overflow: visible !important;
   }
 
   .a4-page {
-    height: auto !important;
     width: 210mm !important;
+    min-height: auto !important;
     overflow: visible !important;
-    page-break-after: always;
     position: relative !important;
+    page-break-after: always;
     background: white !important;
   }
 
@@ -53,22 +62,42 @@ body {
     page-break-after: auto !important;
   }
 
-  /* ================= THE REAL FIX ================= */
-
-  /* FORCE ITEMS / DESCRIPTION TO PRINT */
-  .items-section {
+  /* 🔥 CRITICAL: FORCE ITEM DESCRIPTION TO RENDER */
+  .items-section,
+  .items,
+  .items-table,
+  .item-row,
+  .item-description {
     display: block !important;
-    position: relative !important;
-    min-height: 120px !important;   /* CRITICAL */
     height: auto !important;
+    min-height: 120px !important;
     overflow: visible !important;
-    z-index: 5 !important;
+    position: relative !important;
+    z-index: 10 !important;
   }
 
-  /* IF YOU USED FLEX / GRID INSIDE ITEMS */
+  /* IF ITEMS ARE FLEX / GRID — KILL IT */
   .items-section,
   .items-section * {
-    visibility: visible !important;
+    display: block !important;
+    flex: none !important;
+    grid-template: none !important;
+  }
+
+  /* TABLE SAFETY (EVEN IF JSX USES DIVS) */
+  table {
+    display: table !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  thead { display: table-header-group !important; }
+  tbody { display: table-row-group !important; }
+  tr { display: table-row !important; }
+  td, th {
+    display: table-cell !important;
+    vertical-align: top !important;
+    color: #000 !important;
   }
 
   /* WATERMARK MUST STAY BEHIND */
@@ -76,20 +105,9 @@ body {
     position: absolute !important;
     inset: 0;
     z-index: 0 !important;
-    pointer-events: none;
-  }
-
-  /* ITEMS ABOVE WATERMARK */
-  .items-section {
-    z-index: 10 !important;
+    pointer-events: none !important;
   }
 }
-
-/* Scrollbar (screen only) */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 </style>
 
 <script type="importmap">
