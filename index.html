@@ -74,45 +74,7 @@
             -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
     </style>
-    body { 
-    font-family: 'Inter', sans-serif; 
-    -webkit-print-color-adjust: exact; 
-    print-color-adjust: exact;
-  }
-
-  /* Screen View */
-  .print-only {
-    display: none !important;
-  }
-
-  /* Print View */
-  @media print {
-    .no-print {
-      display: none !important;
-    }
-
-    .print-only {
-      display: block !important;
-      width: 100% !important;
-    }
-
-    @page {
-      size: A4;
-      margin: 0;
-    }
-
-    html, body {
-      background: white !important;
-      height: auto !important;
-      overflow: visible !important;
-    }
-
-    /* Ensure table borders and backgrounds show up */
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-  }
+  
     <style>
   /* Base styles */
   body {
@@ -131,7 +93,7 @@
   /* PRINT VIEW: Hide the app, show the print template */
   @media print {
     /* Hide all standard UI elements (navbar, buttons, dashboard) */
-    .no-print, .no-print * {
+    .no-print {
       /* display: none !important; */
     }
 
