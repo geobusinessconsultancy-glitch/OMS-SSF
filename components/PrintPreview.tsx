@@ -297,5 +297,3 @@ const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
 };
 
 export default PrintPreview;
-
-export default PrintPreview;
