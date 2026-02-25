@@ -124,7 +124,7 @@ const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
             <div 
               key={pageIdx} 
               className="bg-white relative a4-page overflow-hidden print:m-0"
-              style={{ width: '210mm', height: '297mm', position: 'relative', pageBreakAfter: 'always' }}
+              style={{ width: '210mm', height: '297mm', position: 'relative', pageBreakAfter: 'always',overflow: 'visible' }}
             >
               
               {/* BACKGROUND IMAGE - Applied to ALL pages */}
