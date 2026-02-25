@@ -1,10 +1,3 @@
-The error in your Netlify build is occurring because TEMPLATE_BASE64 is being defined twice in your PrintPreview.tsx file. In the previous code, I added a placeholder line that conflicted with the one already at the top of your file.
-
-Additionally, looking at the code you pasted earlier, there were several syntax errors (unfinished strings and duplicate function declarations) preventing the build from succeeding.
-
-Here is the full, corrected code for PrintPreview.tsx. I have merged everything correctly, removed the duplicates, and fixed the syntax:
-
-TypeScript
 import React from 'react';
 import { Order, OrderStatus, OrderItem } from '../types';
 import { Printer } from 'lucide-react';
