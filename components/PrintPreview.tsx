@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Order, OrderStatus, OrderItem } from '../types';
 import { Printer } from 'lucide-react';
 
@@ -7,8 +7,7 @@ interface PrintPreviewProps {
 }
 
 const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
-  const printRef = useRef<HTMLDivElement>(null);
-  
+ 
   // CONFIGURATION FOR A4 PAGE
   const ITEMS_PAGE_1 = 12; 
   const ITEMS_OTHER_PAGES = 14; 
@@ -52,7 +51,9 @@ const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
     }
   };
 
-  const handlePrint = () => {
+const handlePrint = () => {
+  window.open(`/print/${order.id}`, '_blank');
+};
     if (!printRef.current) return;
     const printWindow = window.open(`/print/${order.id}`, '_blank');
     if (!printWindow) {
@@ -116,14 +117,14 @@ const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
         </button>
       </div>
 
-      <div ref={printRef} className="flex flex-col w-full items-center">
+      <div className="flex flex-col w-full items-center">
         {chunkedItems.map((pageItems, pageIdx) => {
           const isLastPage = pageIdx === chunkedItems.length - 1;
           
           return (
             <div 
               key={pageIdx} 
-              className="bg-white relative a4-page overflow-hidden print:m-0"
+              className="bg-white relative a4-page print:m-0"
               style={{ width: '210mm', height: '297mm', position: 'relative', pageBreakAfter: 'always',overflow: 'visible' }}
             >
               
