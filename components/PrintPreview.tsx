@@ -54,7 +54,7 @@ const PrintPreview: React.FC<PrintPreviewProps> = ({ order }) => {
 
   const handlePrint = () => {
     if (!printRef.current) return;
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open(`/print/${order.id}`, '_blank');
     if (!printWindow) {
         alert("Please allow popups to print");
         return;
