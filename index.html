@@ -1,84 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRI SENTHUR FURNITURE - OMS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* 1. GENERAL APP STYLES */
-        body { 
-            font-family: 'Inter', sans-serif; 
-            -webkit-print-color-adjust: exact; 
-            print-color-adjust: exact;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SRI SENTHUR FURNITURE - OMS</title>
 
-        /* 2. SCREEN VIEW: Hide the bill while you are using the dashboard */
-        .print-only { 
-            display: none !important; 
-        }
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        /* 3. PRINT VIEW: Rules for when you click "Print" */
-        @media print {
-            /* HIDE the dashboard, navbar, and buttons */
-            .no-print, .no-print * { 
-                display: none !important; 
-            }
+<style>
+/* ===============================
+   BASE STYLES
+================================ */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8fafc;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
 
-            /* SHOW the bill template and force it to fill the paper */
-            .print-only { 
-                display: block !important; 
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-            }
+/* Hide bill during normal app usage */
+.print-only {
+    display: none;
+}
 
-            /* Force A4 size and remove browser headers/footers */
-            @page { 
-                size: A4; 
-                margin: 0 !important; 
-            }
+/* ===============================
+   PRINT STYLES (CRITICAL)
+================================ */
+@media print {
 
-            /* Ensure background images and colors print correctly */
-            html, body { 
-                background: white !important; 
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            /* Set the bill dimensions to exact A4 size */
-            .a4-page {
-                width: 210mm !important;
-                height: 297mm !important;
-                page-break-after: always;
-                position: relative !important;
-                overflow: hidden !important;
-                background: white !important;
-            }
-        }
-
-        /* Custom Scrollbar Styles */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    </style>
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh/react@19.0.0",
-        "react-dom": "https://esm.sh/react-dom@19.0.0",
-        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-        "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
-        "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
-      }
+    /* Hide dashboard / UI */
+    .no-print,
+    .no-print * {
+        display: none !important;
     }
-    </script>
+
+    /* Show invoice */
+    .print-only {
+        display: block !important;
+        position: static !important; /* IMPORTANT */
+    }
+
+    /* Page setup */
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+
+    html, body {
+        background: #fff !important;
+        width: 100%;
+        height: auto;
+        overflow: visible !important;
+    }
+
+    /* Invoice container */
+    .a4-page {
+        width: 100%;
+        min-height: auto;            /* NOT fixed */
+        overflow: visible !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+
+    /* Tables must not break randomly */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: auto;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tfoot {
+        display: table-footer-group;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    /* Seal / signature / footer */
+    .seal,
+    .signature {
+        position: static !important;
+        margin-top: 30px;
+        page-break-inside: avoid;
+    }
+}
+
+/* Scrollbars (screen only) */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+    "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
+  }
+}
+</script>
 </head>
+
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
