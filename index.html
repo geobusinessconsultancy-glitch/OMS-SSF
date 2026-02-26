@@ -9,72 +9,89 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+/* ================= BASE STYLES ================= */
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
 }
 
-/* ================= PRINT ================= */
+/* ================= PRINT LOGIC ================= */
 @media print {
-
   @page {
     size: A4;
-    margin: 0;
+    margin: 0 !important;
   }
 
+  /* Reset body for print */
   html, body {
     background: #fff !important;
     height: auto !important;
     overflow: visible !important;
+    width: 210mm;
   }
 
-  .print-only {
-    display: block !important;
+  /* Hide UI elements like buttons during print */
+  .no-print {
+    display: none !important;
   }
 
+  /* The A4 Container */
   .a4-page {
     position: relative !important;
     width: 210mm !important;
     height: 297mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-after: always !important;
+    display: block !important;
     background: white !important;
-    overflow: visible !important;
   }
 
-  /* TEMPLATE IMAGE = BACKGROUND ONLY */
+  /* THE FIX: Force the watermark to stay in the background */
   .template-image {
     position: absolute !important;
-    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: 100% !important;
+    z-index: -1 !important; /* Move behind everything */
     object-fit: contain !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
   }
 
-  /* ALL REAL CONTENT ABOVE IMAGE */
+  /* THE FIX: Ensure content layer is visible and on top */
   .print-content {
     position: relative !important;
-    z-index: 10 !important;
+    z-index: 10 !important; /* Move in front of image */
+    display: flex !important; /* Allow Tailwind flex to work */
+    flex-direction: column !important;
+    height: 100% !important;
   }
 
-  /* TABLE MUST NEVER COLLAPSE */
+  /* Ensure Table renders correctly */
   table {
-    display: table !important;
     width: 100% !important;
     border-collapse: collapse !important;
+    table-layout: fixed !important;
   }
 
-  thead { display: table-header-group !important; }
-  tbody { display: table-row-group !important; }
-  tr { display: table-row !important; }
+  /* Prevent row breaking across pages */
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
 
-  th, td {
-    display: table-cell !important;
+  td, th {
+    background-color: transparent !important;
     color: #000 !important;
   }
+}
+
+/* Screen visibility helper */
+#root {
+  width: 100%;
 }
 </style>
 </head>
