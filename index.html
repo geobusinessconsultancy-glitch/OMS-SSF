@@ -1,171 +1,132 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SRI SENTHUR FURNITURE - OMS</title>
 
-
-
 <script src="https://cdn.tailwindcss.com"></script>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-
-
 <style>
-
+/* ================= BASE ================= */
 body {
-
   font-family: 'Inter', sans-serif;
-
   margin: 0;
-
   padding: 0;
-
   -webkit-print-color-adjust: exact;
-
   print-color-adjust: exact;
-
 }
-
-
 
 /* ================= PRINT ================= */
-
 @media print {
 
-
-
-  @page {
-
-    size: A4;
-
-    margin: 0;
-
+  /* FORCE EVERYTHING TO BE VISIBLE */
+  * {
+    visibility: visible !important;
   }
 
-
-
-  html, body {
-
-    background: #fff !important;
-
-    height: auto !important;
-
-    overflow: visible !important;
-
+  /* OVERRIDE TAILWIND PRINT HIDES */
+  .hidden,
+  .print\:hidden {
+    display: block !important;
   }
-
-
 
   .print-only {
-
     display: block !important;
-
+    position: static !important;
   }
 
+  @page {
+    size: A4;
+    margin: 0 !important;
+  }
 
+  html, body {
+    background: #fff !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
 
   .a4-page {
-
-    position: relative !important;
-
     width: 210mm !important;
-
-    height: 297mm !important;
-
-    background: white !important;
-
+    min-height: auto !important;
     overflow: visible !important;
-
-  }
-
-
-
-  /* TEMPLATE IMAGE = BACKGROUND ONLY */
-
-  .template-image {
-
-    position: absolute !important;
-
-    inset: 0 !important;
-
-    width: 100% !important;
-
-    height: 100% !important;
-
-    object-fit: contain !important;
-
-    z-index: 0 !important;
-
-    pointer-events: none !important;
-
-  }
-
-
-
-  /* ALL REAL CONTENT ABOVE IMAGE */
-
-  .print-content {
-
     position: relative !important;
+    page-break-after: always;
+    background: white !important;
+  }
 
+  .a4-page:last-child {
+    page-break-after: auto !important;
+  }
+
+  /* 🔥 CRITICAL: FORCE ITEM DESCRIPTION TO RENDER */
+  .items-section,
+  .items,
+  .items-table,
+  .item-row,
+  .item-description {
+    display: block !important;
+    height: auto !important;
+    min-height: 120px !important;
+    overflow: visible !important;
+    position: relative !important;
     z-index: 10 !important;
-
   }
 
+  /* IF ITEMS ARE FLEX / GRID — KILL IT */
+  .items-section,
+  .items-section * {
+    display: block !important;
+    flex: none !important;
+    grid-template: none !important;
+  }
 
-
-  /* TABLE MUST NEVER COLLAPSE */
-
+  /* TABLE SAFETY (EVEN IF JSX USES DIVS) */
   table {
-
     display: table !important;
-
     width: 100% !important;
-
     border-collapse: collapse !important;
-
   }
-
-
 
   thead { display: table-header-group !important; }
-
   tbody { display: table-row-group !important; }
-
   tr { display: table-row !important; }
-
-
-
-  th, td {
-
+  td, th {
     display: table-cell !important;
-
+    vertical-align: top !important;
     color: #000 !important;
-
   }
 
+  /* WATERMARK MUST STAY BEHIND */
+  .watermark {
+    position: absolute !important;
+    inset: 0;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
 }
-
 </style>
 
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+    "recharts": "https://esm.sh/recharts@2.13.0?deps=react@19.0.0"
+  }
+}
+</script>
+
+<link rel="stylesheet" href="/index.css">
 </head>
 
-
-
 <body class="bg-slate-50 text-slate-900">
-
   <div id="root"></div>
-
   <script type="module" src="/index.tsx"></script>
-
 </body>
-
 </html>
